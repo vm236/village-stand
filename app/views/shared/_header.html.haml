@@ -1,0 +1,22 @@
+#logo-image
+  = link_to (image_tag 'logo.jpg'), root_url
+#cart-image
+  - unless current_user.nil?
+    = link_to (image_tag cart_has_items?, :id => 'cart-image-link'), cart_path(current_user.try(:carts).last)
+  - else
+    - unless session[:cart_id].nil?
+      = link_to (image_tag cart_has_items?, :id => 'cart-image-link'), cart_path(session[:cart_id])
+    -else
+      = link_to (image_tag 'shopping_cart.png', :id => 'cart-image-link'), '#'
+#auth-bar
+  - if user_signed_in?
+    == Signed in as #{link_to "#{current_user.username}", profile_url}. Not you? #{link_to "Sign out", destroy_user_session_path}
+    %p
+      -if admin?
+        You logged in as admin. Please visit
+        = link_to 'admin section', admin_url
+  - else
+    #log-in
+      = link_to "Sign up / Login with facebook", new_user_registration_path
+    #sign-up
+      = link_to "Sign in", new_user_session_path

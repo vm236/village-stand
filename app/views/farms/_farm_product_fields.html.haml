@@ -1,0 +1,17 @@
+.fields
+  %span
+    = f.label :product_id
+    = f.select :product_id, Product.all.collect { |p| [p.title, p.id]}
+  %span
+    = f.label :price
+    = f.text_field :price
+  %span
+    = f.label :harvest
+    = f.text_field :harvest
+  %span
+    = f.label :quantity
+    = f.text_field :quantity
+  %span
+    = f.link_to_remove 'Remove this task'
+    = f.link_to_add "Add a task", :farm_products
+

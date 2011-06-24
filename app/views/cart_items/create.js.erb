@@ -1,0 +1,5 @@
+<% unless session[:cart_id].nil? %>
+    $('#cart-image a').attr('href', "<%= cart_path(Cart.find session[:cart_id]) %>");
+<% end %>
+
+

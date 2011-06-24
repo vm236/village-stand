@@ -1,0 +1,11 @@
+= form_for @product, :html => { :multipart => true } do |f|
+
+
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    = f.label :logo
+    = f.file_field :logo
+  .actions
+    = f.submit 'Save'

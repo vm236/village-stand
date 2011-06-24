@@ -1,0 +1,46 @@
+.container#awarness
+  1,234,432 pounds of freshness served
+.container#information
+  #text.span-12
+    .large
+      What is VillageStand?
+    Not two farms are the same. Farm ho has best tomatos, Farm mo has best baby corn. Farm yo has best lettuce and
+    Farm jo has best berries.Farm ho has best tomatos, Farm mo has best baby corn. Farm yo has best lettuce and
+    Farm jo has best berries.Farm ho has best tomatos, Farm mo has best baby corn. Farm yo has best lettuce and
+    Farm jo has best berries.
+    Not two farms are the same. Farm ho has best tomatos, Farm mo has best baby corn. Farm yo has best lettuce and
+    Farm jo has best berries.Farm ho has best tomatos, Farm mo has best baby corn. Farm yo has best lettuce and
+    Farm jo has best berries.Farm ho has best tomatos, Farm mo has best baby corn. Farm yo has best lettuce and
+    Farm jo has best berries.
+  #video.span-12
+    %object{:height => "349", :width => "425"}
+      %embed{:allowfullscreen => "true", :allowscriptaccess => "always", :height => "349", :src => "http://www.youtube-nocookie.com/v/0xcGaaiDjX4?fs=1&hl=ru_RU&rel=0", :type => "application/x-shockwave-flash", :width => "425"}
+.container#join-now
+  #mobile-icons
+    #android
+      %span#android-image
+        = image_tag 'android.png'
+      %br Android
+    #iphone
+      %span#iphone-image
+        = image_tag 'iphone.png'
+      %br IPhone
+    #blackberry
+      %span#blackberry-image
+        = image_tag 'blackberry.png'
+      %br Blackberry
+    #palm
+      %span#palm-image
+        =image_tag 'palm.png'
+      %br Palm
+  = button_to 'Join now!', new_user_registration_path, :method => :get, :id => 'joinbutton'
+.container
+  #live-feed
+    - @last_activities.each do |message|
+      .feed-message
+        %b
+          = time_ago_in_words message.created_at
+        ago
+        = message.message
+  #map_canvas
+    = render :partial => 'google_map'

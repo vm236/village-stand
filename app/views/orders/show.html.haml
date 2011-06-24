@@ -1,0 +1,56 @@
+- cart = @order.cart
+- user = cart.user
+
+%h2 User order details
+%p
+  %b Ordered by:
+  == #{user.first_name} #{user.last_name} with username #{user.username}
+%p
+  %b Ship address:
+  = @order.ship_address
+%p
+  %b City:
+  = @order.city
+%p
+  %b State:
+  = @order.state
+%p
+  %b Zip:
+  = @order.zip
+%p
+  %b Cc number:
+  = @order.cc_number
+%p
+  %b Telephone:
+  = @order.telephone
+%p
+  %b Cart:
+  = @order.cart_id
+
+%h2 User have ordered
+%table
+  %tr
+    %th Product Name
+    %th Farm
+    %th Price
+    %th Quantity
+    %th Total Price
+
+    - cart.cart_items.each do |item|
+      %tr.cart_item_line
+        %td
+          = item.farm_product.product.title
+        %td
+          = item.farm_product.farm.name
+        %td.price
+          == #{item.farm_product.price}$
+        %td.cart_item_quantity
+          = item.quantity
+        %td.total_price
+          == #{item.total_price}$
+%p
+  %b Order total price:
+  == #{cart.total_price}$
+
+
+= link_to 'Show all orders', orders_path

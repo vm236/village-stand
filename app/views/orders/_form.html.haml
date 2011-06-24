@@ -1,0 +1,61 @@
+#order-info
+  %h2 Order Summary
+  %table.items
+    - @cart.cart_items.each do |p|
+      %tr
+        %td.quantity
+          ==(#{p.quantity})
+        %td.title
+          ==#{p.farm_product.product.title}
+        %td.price
+          ==#{p.total_price} $
+  #total
+    == Total: #{@cart.total_price} $
+  #continue
+    = link_to 'Continue shopping', marketplace_url
+
+
+  %br
+= form_for @order do |f|
+  -if @order.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@order.errors.count, "error")} prohibited this order from being saved:"
+      %ul
+        - @order.errors.full_messages.each do |msg|
+          %li= msg
+  #order-shipping
+    %h2 Shipping Information
+    #address
+      = f.label 'Ship Address'
+      = f.text_field :ship_address
+    #city
+      = f.label 'City'
+      = f.text_field :city
+    #state
+      = f.label 'State'
+      = f.text_field :state
+    #zip
+      = f.label 'Zip Code'
+      = f.text_field :zip
+    #phone
+      = f.label 'Phone'
+      = f.text_field :telephone
+  #order-billing
+    %h2 Billing Information
+    #order-card-images
+      = image_tag 'american-express-curved-32px.png'
+      = image_tag 'mastercard-curved-32px.png'
+      = image_tag 'discover-curved-32px.png'
+      = image_tag 'visa-curved-32px.png'
+    #cc
+      = f.label 'Credit Card Number'
+      = f.text_field :cc_number
+    #exp-date
+      = f.label 'Expiration Date'
+      = f.select(:exp_month,1.upto(12))
+      = f.select(:exp_year, Date.today.year.upto(Date.today.year + 15))
+
+    = hidden_field_tag :cart_id, @cart.id
+  .actions
+    = f.submit 'Order'
+

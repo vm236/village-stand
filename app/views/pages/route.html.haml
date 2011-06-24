@@ -1,0 +1,11 @@
+:javascript
+  lat = '#{@address[0]}'
+  long = '#{@address[1]}'
+  flat = '#{@farm.latitude}'
+  flong = '#{@farm.longitude}'
+  destination = '#{@farm.address}'
+= javascript_include_tag 'route'
+#map_canvas
+
+:css
+  #map_canvas { height: 400px; width:950px;}

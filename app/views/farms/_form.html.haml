@@ -1,0 +1,60 @@
+= nested_form_for @farm, :html => { :multipart => true } do |f|
+  -if @farm.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@farm.errors.count, "error")} prohibited this farm from being saved:"
+      %ul
+        - @farm.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    %div
+    = f.label :name
+    %div
+    = f.text_field :name
+  .field
+    %div
+    = f.label :harvest
+    %div
+    = f.text_field :harvest
+  .field
+    %div
+    = f.label :offers
+    %div
+    = f.text_field :offers
+  .field
+    %div
+    = f.label :about
+    %div
+    = f.text_area :about
+  .field
+    %div
+    = f.label :address
+    %div
+    = f.text_field :address
+  .field
+    %div
+    = f.label :logo
+    %div
+    = f.file_field :logo
+  .field
+    %h2 Select products that you want to sell
+    = f.fields_for :farm_products do |fp|
+      .fields
+        %span
+          = fp.label :product_id
+          = fp.select :product_id, Product.all.collect { |p| [p.title, p.id] }, :prompt => ''
+        %span
+          = fp.label :price
+          = fp.text_field :price
+        %span
+          = fp.label :harvest
+          = fp.text_field :harvest
+        %span
+          = fp.label :quantity
+          = fp.text_field :quantity
+        %span
+          = fp.link_to_remove 'Remove this product'
+  = f.link_to_add "Add a product", :farm_products
+
+  .actions
+    = f.submit 'Save'

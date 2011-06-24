@@ -1,0 +1,25 @@
+%table#users
+  %tr
+    %th Email
+    %th First Name
+    %th Last Name
+    %th Username
+    %th Role
+    %th
+    %th
+  - @users.each do |user|
+    %tr
+      %td
+        = user.email
+      %td
+        = user.first_name
+      %td
+        = user.last_name
+      %td
+        = user.username
+      %td
+        = user.role.titleize
+      %td
+        = link_to 'Edit', edit_user_path(user)
+      %td
+        = link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete

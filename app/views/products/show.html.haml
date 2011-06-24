@@ -1,0 +1,10 @@
+%p
+  %b Title:
+  = @product.title
+%p
+  %b Logo:
+  = image_tag @product.logo.url.to_s
+
+= link_to 'Edit', edit_product_path(@product)
+\|
+= link_to 'All products', products_path

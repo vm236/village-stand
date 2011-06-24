@@ -1,0 +1,25 @@
+%h1 Listing orders
+
+%table
+  %tr
+    %th Order total price
+    %th Ship address
+    %th City
+    %th State
+    %th Zip
+    %th Cc number
+    %th Telephone
+    %th
+
+
+  - @orders.each do |order|
+    %tr
+      %td== #{order.cart.total_price}$
+      %td= order.ship_address
+      %td= order.city
+      %td= order.state
+      %td= order.zip
+      %td= order.cc_number
+      %td= order.telephone
+      %td= link_to 'Show', order
+

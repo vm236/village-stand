@@ -1,0 +1,40 @@
+%p
+  %b Name:
+  = @farm.name
+%p
+  %b Harvest:
+  = @farm.harvest
+%p
+  %b Offers:
+  = @farm.offers
+%p
+  %b About:
+  = @farm.about
+%p
+  %b About:
+  = @farm.address
+%p
+  %b Logo:
+  = image_tag @farm.logo.url.to_s
+%h2 Products List
+- for farm_product in @farm.farm_products
+  - product = Product.find(farm_product.product_id)
+  %p
+    %b Product:
+    = product.title
+    = image_tag product.logo.url.to_s
+    %span
+      %b Product price:
+      = farm_product.price
+    %span
+      %b Product quantity:
+      = farm_product.quantity
+    %span
+      %b Product harvest:
+      = farm_product.harvest
+
+
+
+= link_to 'Edit', edit_farm_path(@farm)
+\|
+= link_to 'Back', farms_path

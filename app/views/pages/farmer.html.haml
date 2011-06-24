@@ -1,0 +1,8 @@
+- if current_user.farm.nil?
+  #farmer
+    You don't have any associated with you farm.
+    = link_to 'Create one?', new_farm_path
+- else
+  #farmer
+    You have farm associated with you.
+    = link_to 'Want to manage it?', my_farm_url(:id => current_user.farm.id)

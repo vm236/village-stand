@@ -1,0 +1,42 @@
+!!!
+%html
+  %head
+    %title Geomarket
+    %script{:src => "http://maps.google.com/maps/api/js?sensor=true", :type => "text/javascript"}
+    = stylesheet_link_tag 'print', :media => 'print'
+    = stylesheet_link_tag 'screen', 'home', 'jquery-ui-1.8.12.custom', :media => 'screen, projection'
+    /[if IE]
+      = stylesheet_link_tag 'ie'
+    = javascript_include_tag 'jquery', 'BookmarkApp', 'nested_form', 'jquery-ui', 'rails', 'application'
+    = hidden_field_tag :geolat
+    = hidden_field_tag :geolong
+    = csrf_meta_tag
+  %body
+    .container#header
+      = render :partial => 'shared/header'
+    .container#navigation
+      = link_to 'Home', root_path, :id => 'home'
+      = link_to 'Marketplace', marketplace_url, :id => 'marketplace'
+      = link_to 'Village Board', nil, :id => 'village-board'
+    .container
+      - if flash[:notice]
+        #notice
+          = flash[:notice]
+      = yield
+    .container
+      #footer
+        #gift
+          = image_tag 'gift.png', :id => 'giftimg'
+          %br Give a VillageStand gift
+        - if farmer?
+          #bulkorder
+            = link_to (image_tag 'order.png', :id => 'bulkimg'), farmer_url
+            %br Business Login
+        #footer-right
+          #followus
+            = image_tag 'twitter.png'
+            = image_tag 'facebook.png'
+            %br Follow us on
+          #contact
+            = image_tag 'contact.png', :id => 'contactimg'
+            %br Contact us

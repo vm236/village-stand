@@ -1,0 +1,49 @@
+#sort
+  %b Sort by
+  = link_to 'Distance', marketplace_url(:sort_by => 'distance'), :id => 'distance-sort'
+  = link_to 'Price', marketplace_url(:sort_by => 'price'), :id => 'price-sort'
+#title-bar
+#farms
+  - @farms[0..3].each do |farm|
+    .farm
+      .farm-info
+        %p
+          = image_tag farm.logo.url.to_s
+          = link_to farm.name, :action => 'village_board', :controller => 'pages', :farm => farm
+          = link_to image_tag('route.jpg'), :action => 'route', :controller => 'pages', :id => farm
+        %p
+          Harvest:
+          = farm.harvest
+          days
+        %p
+          Distance:
+          - if cookies[:latitude].nil? || cookies[:longitude].nil?
+            = '%.2f' % farm.distance_from(@address)
+          - else
+            = '%.2f' % farm.distance_from([Float(cookies[:latitude]),Float(cookies[:longitude])])
+          miles
+        %p
+          Votes:
+          = farm.votes_count
+        %p
+          Offers:
+          = farm.offers
+      .farm-products
+        - farm.farm_products[0..3].each do |fp|
+          - product = Product.find(fp.product_id)
+          %table.product-table
+            %tr
+              %td.image-td
+                = image_tag product.logo.url.to_s
+              %td.title-td
+                = product.title
+              %td.price-td
+                == .#{fp.price} C/lbs
+              %td.quantity-td
+                == #{fp.quantity} lbs
+              %td.cart-td
+                = link_to (image_tag 'shopping_cart_add (1).png', :alt => product.title), cart_items_path(:farm_product_id => fp),
+                :remote => true, :method => :post, :class => 'add_to_cart_link'
+        %span#link-more
+          = link_to products_left_to_show(farm.farm_products.count), :action => 'village_board', :controller => 'pages', :farm => farm
+= will_paginate @farms

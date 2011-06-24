@@ -1,0 +1,39 @@
+- if @cart.cart_items.empty?
+  #cart_title
+    Your VillageStand Cart is Empty!
+    = link_to 'Order something, please!', marketplace_url
+- else
+
+  %table
+    %tr
+      %th Product Name
+      %th Farm
+      %th Price
+      %th Quantity
+      %th Total Price
+      %th Remove
+      %th Add
+      - @cart.cart_items.each do |item|
+        %tr.cart_item_line
+          %td
+            = item.farm_product.product.title
+          %td
+            = item.farm_product.farm.name
+          %td.price
+            == #{item.farm_product.price}$
+          %td.cart_item_quantity
+            = item.quantity
+          %td.total_price
+            == #{item.total_price}$
+          %td
+            = link_to (image_tag 'remove.png'), cart_item_path(:farm_product_id => item.farm_product.id),
+           :method =>:delete, :remote => true, :class => 'quantity-remove-link'
+          %td
+            = link_to (image_tag 'add.png'), cart_items_path(:farm_product_id => item.farm_product),
+           :remote => true, :method => :post, :class => 'quantity-add-link'
+  #total
+    Total price:
+    %span#money_total
+      == #{@cart.total_price}$
+  = link_to (image_tag 'remove_cart.png'), @cart, :method => :delete, :confirm => 'Are you really want to delete all cart items?'
+  = link_to (image_tag 'checkout.png'), new_order_path

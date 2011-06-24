@@ -1,0 +1,7 @@
+.bundle
+.rspec
+log/*.log
+tmp/**/*
+config/database.yml
+.idea
+

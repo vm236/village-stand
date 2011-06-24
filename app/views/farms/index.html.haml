@@ -1,0 +1,24 @@
+%h1 Listing farms
+
+%table
+  %tr
+    %th Name
+    %th Harvest
+    %th Offers
+    %th Logo
+    %th
+    %th
+    %th
+
+  - @farms.each do |farm|
+    %tr
+      %td= farm.name
+      %td= farm.harvest
+      %td= farm.offers
+      %td= image_tag farm.logo.url.to_s
+      %td= link_to 'Full information', farm
+      %td= link_to 'Edit', edit_farm_path(farm)
+      %td= link_to 'Destroy', farm, :confirm => 'Are you sure?', :method => :delete
+
+%br
+

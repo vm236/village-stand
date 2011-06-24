@@ -1,0 +1,47 @@
+!!!
+%html
+  %head
+    %title Geomarket
+    = stylesheet_link_tag 'print', :media => 'print'
+    = stylesheet_link_tag 'screen', 'home', 'admin', :media => 'screen, projection'
+    /[if IE]
+      = stylesheet_link_tag 'ie'
+    = javascript_include_tag 'jquery', 'nested_form', 'rails', 'application'
+    = csrf_meta_tag
+  %body
+    .container#header
+      #logo-image
+        = link_to (image_tag 'logo.jpg'), root_url
+      #cart-image
+        -unless current_user.nil?
+          = link_to (image_tag cart_has_items?, :id => 'cart-image-link'), cart_path(current_user.try(:carts).last)
+      #auth-bar
+        - if user_signed_in?
+          == Signed in as #{link_to "#{current_user.username}", profile_url}. Not you? #{link_to "Sign out", destroy_user_session_path}
+        %br You are in the admin section. Go to the #{link_to 'home page', root_url}
+
+    .container
+      = link_to 'Manage products', products_path, :id => 'products-admin'
+      = link_to 'Manage farms', farms_path, :id => 'farms-admin'
+      = link_to 'Manage orders', orders_path, :id => 'orders-admin'
+      = link_to 'Manage users', users_path, :id => 'users-admin'
+      - if flash[:notice]
+        #notice
+          = flash[:notice]
+      = yield
+    .container
+      #footer
+        #gift
+          = image_tag 'gift.png', :id => 'giftimg'
+          %br Give a VillageStand gift
+        #bulkorder
+          = image_tag 'order.png', :id => 'bulkimg'
+          %br Business Login
+        #footer-right
+          #followus
+            = image_tag 'twitter.png'
+            = image_tag 'facebook.png'
+            %br Follow us on
+          #contact
+            = image_tag 'contact.png', :id => 'contactimg'
+            %br Contact us

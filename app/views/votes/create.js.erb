@@ -1,0 +1,20 @@
+$(document).ready(function(){
+        $.fn.wait = function(time, type) {
+        time = time || 1000;
+        type = type || "fx";
+        return this.queue(type, function() {
+            var self = this;
+            setTimeout(function() {
+                $(self).dequeue();
+            }, time);
+        });
+    };
+    $('#title-bar').prepend('<div id="notice">Vote counts!</div>');
+
+    var votes = $('#votes-count');
+    votes.html(parseInt(votes.html()) + 1);
+    $('#highlight').effect("highlight", { color: 'green'}, 3000);
+        $('#notice').wait(3500).hide('3500', function() {
+            $(this).remove();
+        });
+});

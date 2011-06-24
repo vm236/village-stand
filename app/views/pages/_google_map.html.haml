@@ -1,0 +1,12 @@
+%script
+  distance = []
+  - @farms.each do |f|
+    distance.push(['#{f.latitude}' + ',' + '#{f.longitude}' + ',' + '#{f.name}', #{f.distance_from(@address)}])
+  distance.sort(sortMultiDimensional)
+  user_coords = #{Geocoder.coordinates(@address)}
+= javascript_include_tag 'homemap'
+
+
+
+
+

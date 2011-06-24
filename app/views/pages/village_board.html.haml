@@ -1,0 +1,62 @@
+#farm-panel
+  - unless current_user.nil?
+    = form_for @vote, :remote => true do |f|
+
+      = f.hidden_field "farm_id", :value => @farm.id
+      = f.hidden_field "user_id", :value => current_user.id
+      = link_to (image_tag 'favorite2.png'), 'javascript:void(0)', :onclick => 'return ATBookmarkApp.addBookmark(this)'
+      = image_submit_tag "star.jpg"
+#title-bar
+#farm
+  %ul
+    %li
+      %a{:href => "#farm-main"} Produce List
+    %li
+      %a{:href => "#farm-whats-around"} Whats happening
+    %li
+      %a{:href => "#farm-about"} About us
+  #farm-about
+    = @farm.about
+  #farm-whats-around
+    What's happening around? dunno yet...
+  #farm-main
+    #farm-info
+      %p
+        = image_tag @farm.logo.url.to_s
+        = @farm.name
+        = link_to image_tag('route.jpg'), :action => 'route', :controller => 'pages', :id => @farm
+      %p
+        Distance
+        = '%.2f' % @farm.distance_from(@address)
+        miles
+      %p
+        Harvest:
+        = @farm.harvest
+        days
+      %p#highlight
+        Votes:
+        %span#votes-count
+          = @farm.votes_count
+      %p
+        Offers:
+        = @farm.offers
+    #farm-products
+      - @farm.farm_products.each do |fp|
+        - product = Product.find(fp.product_id)
+        %table.product-table
+          %tr
+            %td.image-td
+              = image_tag product.logo.url.to_s
+            %td.title-td
+              = product.title
+            %td.price-td
+              = '.'+ fp.price.to_s + ' C/lbs'
+            %td.quantity-td
+              = fp.quantity
+            %td.cart-td
+              = link_to (image_tag 'shopping_cart_add (1).png', :alt => product.title), cart_items_path(:farm_product_id => fp),
+              :remote => true, :method => :post, :class => 'add_to_cart_link'
+:css
+  #farm-panel {
+  text-align: right;
+  }
